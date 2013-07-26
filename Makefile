@@ -21,6 +21,7 @@ parser.c : parser.leg greg/greg parser.h
 	greg/greg -o parser.c parser.leg
 
 $(GREG): greg
+	touch greg/greg.c
 	CC=gcc $(MAKE) -C greg
 
 $(PROGRAM) : $(OBJS)
