@@ -758,9 +758,10 @@ void print_latex_node(GString *out, node *n, scratch_pad *scratch) {
 			break;
 		case TABLESEPARATOR:
 			temp_str = g_string_new("");
+            g_string_append_printf(temp_str,"%c",'|');
 			for (i = 0; n->str[i]; i++) {
 				if (n->str[i] != 'h')
-					g_string_append_printf(temp_str,"%c",toupper(n->str[i]));
+					g_string_append_printf(temp_str,"%c|",toupper(n->str[i]));
 			}
 			g_string_append_printf(out, "\\begin{tabulary}{\\textwidth}{@{}%s@{}} \\toprule\n", temp_str->str);
 			g_string_free(temp_str, true);
@@ -797,7 +798,7 @@ void print_latex_node(GString *out, node *n, scratch_pad *scratch) {
 		case TABLECELL:
 			scratch->padded = 2;
 			if ((n->children != NULL) && (n->children->key == CELLSPAN)) {
-				g_string_append_printf(out, "\\multicolumn{%d}{c}{",(int)strlen(n->children->str)+1);
+				g_string_append_printf(out, "\\multicolumn{%d}{c|}{",(int)strlen(n->children->str)+1);
 			}
 			print_latex_node_tree(out, n->children, scratch);
 			if ((n->children != NULL) && (n->children->key == CELLSPAN)) {
